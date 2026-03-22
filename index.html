@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Dhinesh — Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg: #faf9f7;
+    --surface: #f3f1ee;
+    --text: #1a1714;
+    --muted: #7a756e;
+    --accent: #6b3fa0;
+    --accent-light: #ede8f5;
+    --accent-mid: #9d6fd4;
+    --border: #e2ddd8;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Mono', monospace;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.4rem 4rem;
+    background: rgba(250,249,247,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: var(--text);
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    text-decoration: none;
+    color: var(--muted);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--accent); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 0 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg-circle {
+    position: absolute;
+    width: 520px;
+    height: 520px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #ede8f5 0%, transparent 70%);
+    right: -80px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+  }
+
+  .hero-content {
+    max-width: 680px;
+    animation: fadeUp 0.9s ease both;
+  }
+
+  .hero-eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.4rem;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+
+  .hero-eyebrow::before {
+    content: '';
+    display: inline-block;
+    width: 28px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  .hero-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3.5rem, 8vw, 6.5rem);
+    font-weight: 300;
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    color: var(--text);
+    margin-bottom: 1rem;
+  }
+
+  .hero-name em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .hero-tagline {
+    font-size: 13px;
+    color: var(--muted);
+    max-width: 420px;
+    margin-bottom: 2.8rem;
+    line-height: 1.8;
+  }
+
+  .hero-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.7rem;
+    padding: 0.85rem 2rem;
+    background: var(--accent);
+    color: #fff;
+    text-decoration: none;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    transition: background 0.2s, transform 0.2s;
+    border-radius: 2px;
+  }
+
+  .hero-cta:hover {
+    background: #5a3388;
+    transform: translateY(-2px);
+  }
+
+  .hero-cta svg { transition: transform 0.2s; }
+  .hero-cta:hover svg { transform: translateX(4px); }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 2.5rem;
+    left: 4rem;
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    color: var(--muted);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    animation: fadeIn 1.2s 0.6s ease both;
+    opacity: 0;
+  }
+
+  .scroll-line {
+    width: 1px;
+    height: 36px;
+    background: linear-gradient(to bottom, var(--border), transparent);
+    animation: scrollPulse 2s infinite;
+  }
+
+  /* SECTION BASE */
+  section { padding: 7rem 4rem; }
+
+  .section-label {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+
+  .section-label::before {
+    content: '';
+    display: inline-block;
+    width: 20px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 300;
+    line-height: 1.2;
+    margin-bottom: 3rem;
+    color: var(--text);
+  }
+
+  /* ABOUT */
+  #about {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: center;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .about-text p {
+    color: var(--muted);
+    margin-bottom: 1.2rem;
+    font-size: 13.5px;
+    line-height: 1.9;
+  }
+
+  .about-text p strong {
+    color: var(--text);
+    font-weight: 400;
+  }
+
+  .about-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .about-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px;
+    height: 100%;
+    background: var(--accent);
+  }
+
+  .about-stat { display: flex; flex-direction: column; gap: 0.2rem; }
+
+  .about-stat-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.4rem;
+    font-weight: 300;
+    color: var(--accent);
+    line-height: 1;
+  }
+
+  .about-stat-label {
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  /* SKILLS */
+  #skills { max-width: 1100px; margin: 0 auto; padding: 7rem 4rem; }
+
+  .skills-wrapper {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .skill-card {
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 2rem;
+    background: var(--bg);
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
+    cursor: default;
+  }
+
+  .skill-card:hover {
+    border-color: var(--accent-mid);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(107,63,160,0.09);
+  }
+
+  .skill-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent), var(--accent-mid));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+  }
+
+  .skill-card:hover::after { transform: scaleX(1); }
+
+  .skill-icon {
+    width: 42px;
+    height: 42px;
+    background: var(--accent-light);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.2rem;
+    font-size: 1.3rem;
+  }
+
+  .skill-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.35rem;
+    font-weight: 400;
+    color: var(--text);
+    margin-bottom: 0.5rem;
+  }
+
+  .skill-desc {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  .skill-tags {
+    margin-top: 1.2rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .tag {
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    padding: 0.25rem 0.65rem;
+    background: var(--accent-light);
+    color: var(--accent);
+    border-radius: 100px;
+    text-transform: uppercase;
+  }
+
+  /* CONTACT */
+  #contact {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    padding: 7rem 4rem;
+  }
+
+  .contact-inner { max-width: 600px; margin: 0 auto; }
+
+  .contact-intro {
+    color: var(--muted);
+    font-size: 13px;
+    margin-bottom: 2.5rem;
+    line-height: 1.9;
+  }
+
+  .contact-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.8rem;
+    color: var(--text);
+    text-decoration: none;
+    font-size: 13px;
+    padding: 1rem 1.5rem;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    background: var(--bg);
+    transition: border-color 0.2s, color 0.2s, transform 0.2s;
+    width: 100%;
+  }
+
+  .contact-link:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    transform: translateX(4px);
+  }
+
+  /* FOOTER */
+  footer {
+    padding: 2rem 4rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  .footer-accent {
+    color: var(--accent);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    font-style: italic;
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(28px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.4; }
+    50%       { opacity: 1; }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    nav { padding: 1.2rem 1.5rem; }
+    .nav-links { gap: 1.5rem; }
+    section, #skills, #contact { padding: 5rem 1.5rem; }
+    .hero { padding: 0 1.5rem; }
+    .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    footer { padding: 1.5rem; flex-direction: column; gap: 0.5rem; text-align: center; }
+    .scroll-hint { left: 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">Dhinesh</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg-circle"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Portfolio</p>
+    <h1 class="hero-name">Hi, I'm<br/><em>Dhinesh</em></h1>
+    <p class="hero-tagline">
+      Mechatronics Engineering Student — passionate about storytelling through content and video creation.
+    </p>
+    <a href="#contact" class="hero-cta">
+      Get in Touch
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="5" y1="12" x2="19" y2="12"/>
+        <polyline points="12 5 19 12 12 19"/>
+      </svg>
+    </a>
+  </div>
+  <div class="scroll-hint">
+    <div class="scroll-line"></div>
+    Scroll
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-grid">
+    <div class="about-text reveal">
+      <p class="section-label">About Me</p>
+      <h2 class="section-title">Engineering meets<br/><em style="font-family:'Cormorant Garamond',serif;font-style:italic;">Creativity</em></h2>
+      <p>
+        I'm <strong>Dhinesh</strong>, a Mechatronics Engineering student with a passion for the creative side of technology. I blend analytical thinking with a flair for visual storytelling.
+      </p>
+      <p>
+        When I'm not deep in engineering coursework, I'm crafting compelling content and producing videos that communicate ideas in engaging, memorable ways.
+      </p>
+      <p>
+        I believe great content — like great engineering — is all about precision, creativity, and making things work beautifully together.
+      </p>
+    </div>
+    <div class="about-card reveal">
+      <div class="about-stat">
+        <span class="about-stat-number">B.E.</span>
+        <span class="about-stat-label">Mechatronics Engineering</span>
+      </div>
+      <hr style="border:none;border-top:1px solid var(--border);"/>
+      <div class="about-stat">
+        <span class="about-stat-number">2</span>
+        <span class="about-stat-label">Core Creative Skills</span>
+      </div>
+      <hr style="border:none;border-top:1px solid var(--border);"/>
+      <div class="about-stat">
+        <span class="about-stat-number">∞</span>
+        <span class="about-stat-label">Ideas to Explore</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <p class="section-label reveal">Skills</p>
+  <h2 class="section-title reveal">What I Do</h2>
+  <div class="skills-wrapper">
+
+    <div class="skill-card reveal">
+      <div class="skill-icon">✍️</div>
+      <div class="skill-name">Content Creation</div>
+      <div class="skill-desc">
+        Crafting engaging written and digital content that resonates with audiences. From social media posts to long-form pieces — I tell stories that connect.
+      </div>
+      <div class="skill-tags">
+        <span class="tag">Writing</span>
+        <span class="tag">Social Media</span>
+        <span class="tag">Storytelling</span>
+        <span class="tag">Copywriting</span>
+      </div>
+    </div>
+
+    <div class="skill-card reveal" style="transition-delay:0.1s">
+      <div class="skill-icon">🎬</div>
+      <div class="skill-name">Video Creation</div>
+      <div class="skill-desc">
+        Producing, editing, and delivering high-quality videos from concept to final cut. I bring ideas to life through compelling visuals and crisp editing.
+      </div>
+      <div class="skill-tags">
+        <span class="tag">Video Editing</span>
+        <span class="tag">Scripting</span>
+        <span class="tag">Production</span>
+        <span class="tag">Motion</span>
+      </div>
+    </div>
+
+    <div class="skill-card reveal" style="transition-delay:0.2s">
+      <div class="skill-icon">⚙️</div>
+      <div class="skill-name">Mechatronics</div>
+      <div class="skill-desc">
+        A strong engineering foundation in mechanics, electronics, and software — giving my creative work a uniquely technical, problem-solving edge.
+      </div>
+      <div class="skill-tags">
+        <span class="tag">Engineering</span>
+        <span class="tag">Robotics</span>
+        <span class="tag">Electronics</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-inner">
+    <p class="section-label reveal">Contact</p>
+    <h2 class="section-title reveal">Let's Work<br/><em style="font-family:'Cormorant Garamond',serif;font-style:italic;">Together</em></h2>
+    <p class="contact-intro reveal">
+      Have a project, collaboration, or just want to say hello? My inbox is always open. I'd love to hear from you.
+    </p>
+    <a href="mailto:dhineshdj440@gmail.com" class="contact-link reveal">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="2" y="4" width="20" height="16" rx="2"/>
+        <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+      </svg>
+      dhineshdj440@gmail.com
+    </a><a href="https://www.instagram.com/thenerdyenough?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" class="contact-link reveal">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      </svg>
+      Instagram - thenerdyenough
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span>© 2026 Dhinesh. All rights reserved.</span>
+  <span class="footer-accent">Built with intention.</span>
+</footer>
+
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
