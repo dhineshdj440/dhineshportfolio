@@ -6,15 +6,15 @@
 <title>Dhinesh — Portfolio</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet"/>
 <style>
-  :root {
-    --bg: #faf9f7;
-    --surface: #f3f1ee;
-    --text: #1a1714;
-    --muted: #7a756e;
-    --accent: #6b3fa0;
-    --accent-light: #ede8f5;
-    --accent-mid: #9d6fd4;
-    --border: #e2ddd8;
+:root {
+    --purple-deep:   #1a0533;
+    --purple-mid:    #3d1172;
+    --purple-vivid:  #7c3aed;
+    --purple-light:  #a855f7;
+    --purple-pale:   #e9d5ff;
+    --white:         #ffffff;
+    --cream:         #faf8ff;
+    --glow:          rgba(168, 85, 247, 0.4);
   }
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -72,117 +72,400 @@
 
   /* HERO */
   .hero {
+    position: relative; z-index: 1;
     min-height: 100vh;
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 420px;
     align-items: center;
-    padding: 0 4rem;
-    position: relative;
-    overflow: hidden;
+    gap: 60px;
+    padding: 120px 60px 80px;
+    max-width: 1300px;
+    margin: 0 auto;
   }
-
-  .hero-bg-circle {
-    position: absolute;
-    width: 520px;
-    height: 520px;
-    border-radius: 50%;
-    background: radial-gradient(circle, #ede8f5 0%, transparent 70%);
-    right: -80px;
-    top: 50%;
-    transform: translateY(-50%);
-    pointer-events: none;
+ 
+  /* ── LEFT CONTENT ── */
+  .hero-left { display: flex; flex-direction: column; gap: 32px; }
+ 
+  .badge {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: rgba(124,58,237,.15);
+    border: 1px solid rgba(168,85,247,.3);
+    padding: 8px 18px; border-radius: 100px;
+    width: fit-content;
+    animation: fadeUp .6s ease both;
   }
-
-  .hero-content {
-    max-width: 680px;
-    animation: fadeUp 0.9s ease both;
+  .badge-dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: #4ade80;
+    box-shadow: 0 0 8px #4ade80;
+    animation: pulse-dot 2s infinite;
   }
-
-  .hero-eyebrow {
-    font-size: 11px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 1.4rem;
-    display: flex;
-    align-items: center;
-    gap: 0.8rem;
+  @keyframes pulse-dot {
+    0%,100% { box-shadow: 0 0 8px #4ade80; }
+    50%      { box-shadow: 0 0 16px #4ade80, 0 0 24px rgba(74,222,128,.4); }
   }
-
-  .hero-eyebrow::before {
-    content: '';
-    display: inline-block;
-    width: 28px;
-    height: 1px;
-    background: var(--accent);
-  }
-
-  .hero-name {
+  .badge span { font-size: .7rem; letter-spacing: .18em; text-transform: uppercase; color: var(--purple-pale); }
+ 
+  .hero-title {
     font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(3.5rem, 8vw, 6.5rem);
+    font-size: clamp(3.5rem, 6vw, 6rem);
     font-weight: 300;
     line-height: 1.05;
-    letter-spacing: -0.01em;
-    color: var(--text);
-    margin-bottom: 1rem;
+    letter-spacing: -.01em;
+    animation: fadeUp .7s .1s ease both;
   }
-
-  .hero-name em {
-    font-style: italic;
-    color: var(--accent);
+  .hero-title .line-accent {
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--purple-pale) 0%, var(--purple-light) 50%, #c084fc 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+    position: relative;
   }
-
-  .hero-tagline {
-    font-size: 13px;
-    color: var(--muted);
-    max-width: 420px;
-    margin-bottom: 2.8rem;
-    line-height: 1.8;
+  .hero-title .line-accent::after {
+    content: '';
+    position: absolute; bottom: 4px; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--purple-light), transparent);
   }
-
-  .hero-cta {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.7rem;
-    padding: 0.85rem 2rem;
-    background: var(--accent);
-    color: #fff;
-    text-decoration: none;
-    font-size: 11px;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    transition: background 0.2s, transform 0.2s;
-    border-radius: 2px;
+ 
+  .hero-sub {
+    font-size: .85rem; line-height: 1.8;
+    color: rgba(233,213,255,.65);
+    max-width: 520px; letter-spacing: .03em;
+    animation: fadeUp .7s .2s ease both;
   }
-
-  .hero-cta:hover {
-    background: #5a3388;
-    transform: translateY(-2px);
+ 
+  /* ── TYPEWRITER ── */
+  .typewriter-wrap {
+    display: flex; align-items: center; gap: 12px;
+    animation: fadeUp .7s .3s ease both;
   }
-
-  .hero-cta svg { transition: transform 0.2s; }
-  .hero-cta:hover svg { transform: translateX(4px); }
-
+  .tw-label { font-size: .68rem; letter-spacing: .2em; text-transform: uppercase; color: rgba(168,85,247,.6); }
+  .tw-text {
+    font-size: 1rem; color: var(--purple-pale);
+    letter-spacing: .05em;
+    border-right: 2px solid var(--purple-light);
+    padding-right: 4px;
+    animation: blink .75s step-end infinite;
+    min-width: 200px;
+  }
+  @keyframes blink { 50% { border-color: transparent; } }
+ 
+  /* ── STATS ── */
+  .stats {
+    display: flex; gap: 40px;
+    padding-top: 8px;
+    border-top: 1px solid rgba(168,85,247,.15);
+    animation: fadeUp .7s .4s ease both;
+  }
+  .stat { display: flex; flex-direction: column; gap: 4px; }
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.2rem; font-weight: 700;
+    background: linear-gradient(135deg, #fff, var(--purple-light));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .stat-label { font-size: .65rem; letter-spacing: .2em; text-transform: uppercase; color: rgba(255,255,255,.4); }
+ 
+  /* ── BUTTONS ── */
+  .hero-actions {
+    display: flex; gap: 16px; align-items: center;
+    animation: fadeUp .7s .5s ease both;
+  }
+  .btn-primary {
+    position: relative; overflow: hidden;
+    background: linear-gradient(135deg, var(--purple-mid), var(--purple-vivid));
+    color: #fff; border: none; padding: 16px 36px;
+    border-radius: 3px; font-family: 'DM Mono', monospace;
+    font-size: .75rem; letter-spacing: .15em; text-transform: uppercase;
+    cursor: none; transition: transform .2s, box-shadow .3s;
+    box-shadow: 0 4px 24px rgba(124,58,237,.4);
+  }
+  .btn-primary::before {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,.12), transparent);
+    opacity: 0; transition: opacity .3s;
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(124,58,237,.6); }
+  .btn-primary:hover::before { opacity: 1; }
+ 
+  .btn-secondary {
+    background: transparent; color: var(--purple-pale);
+    border: 1px solid rgba(168,85,247,.4); padding: 16px 36px;
+    border-radius: 3px; font-family: 'DM Mono', monospace;
+    font-size: .75rem; letter-spacing: .15em; text-transform: uppercase;
+    cursor: none; transition: all .3s; display: flex; align-items: center; gap: 10px;
+  }
+  .btn-secondary:hover {
+    border-color: var(--purple-light);
+    background: rgba(124,58,237,.12);
+    box-shadow: 0 0 20px rgba(168,85,247,.15);
+  }
+  .btn-arrow { transition: transform .3s; }
+  .btn-secondary:hover .btn-arrow { transform: translateX(4px); }
+ 
+  /* ── SOCIALS ── */
+  .socials {
+    display: flex; gap: 16px;
+    animation: fadeUp .7s .6s ease both;
+  }
+  .social-link {
+    width: 40px; height: 40px; border-radius: 50%;
+    border: 1px solid rgba(168,85,247,.3);
+    display: flex; align-items: center; justify-content: center;
+    color: rgba(233,213,255,.6); text-decoration: none;
+    font-size: .8rem; transition: all .3s;
+    background: rgba(124,58,237,.08);
+  }
+  .social-link:hover {
+    border-color: var(--purple-light);
+    color: var(--white);
+    background: rgba(124,58,237,.25);
+    box-shadow: 0 0 16px rgba(168,85,247,.3);
+    transform: translateY(-3px);
+  }
+ 
+  /* ── RIGHT — PHOTO CARD ── */
+  .hero-right {
+    position: relative;
+    animation: fadeRight .9s .2s ease both;
+  }
+ 
+  .photo-frame {
+    position: relative;
+    width: 380px; height: 480px;
+  }
+ 
+  /* decorative corner lines */
+  .photo-frame::before, .photo-frame::after {
+    content: ''; position: absolute;
+    width: 60px; height: 60px; z-index: 3; pointer-events: none;
+  }
+  .photo-frame::before {
+    top: -8px; left: -8px;
+    border-top: 2px solid var(--purple-light);
+    border-left: 2px solid var(--purple-light);
+  }
+  .photo-frame::after {
+    bottom: -8px; right: -8px;
+    border-bottom: 2px solid var(--purple-light);
+    border-right: 2px solid var(--purple-light);
+  }
+ 
+  .photo-inner {
+    width: 100%; height: 100%;
+    border-radius: 4px; overflow: hidden;
+    position: relative;
+    background: linear-gradient(160deg, rgba(61,17,114,.9) 0%, rgba(26,5,51,.95) 100%);
+    border: 1px solid rgba(168,85,247,.2);
+    box-shadow: 0 24px 80px rgba(0,0,0,.5), inset 0 0 60px rgba(124,58,237,.08);
+    transition: transform .4s cubic-bezier(.17,.67,.35,1.2);
+  }
+  .photo-inner:hover { transform: scale(1.015) rotate(.4deg); }
+ 
+  /* The actual photo — replace src with your image */
+  .photo-img {
+    width: 100%; height: 100%;
+    object-fit: cover; object-position: top center;
+    display: block;
+    mix-blend-mode: luminosity;
+    opacity: .9;
+    transition: opacity .4s, mix-blend-mode .4s;
+  }
+  .photo-inner:hover .photo-img { opacity: 1; mix-blend-mode: normal; }
+ 
+  /* placeholder shown when no real image */
+  .photo-placeholder {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 16px;
+    color: rgba(233,213,255,.35);
+  }
+  .photo-placeholder svg { opacity: .4; }
+  .photo-placeholder p { font-size: .68rem; letter-spacing: .15em; text-transform: uppercase; }
+ 
+  /* purple overlay gradient on photo */
+  .photo-overlay {
+    position: absolute; inset: 0; z-index: 1;
+    background: linear-gradient(180deg, transparent 50%, rgba(26,5,51,.85) 100%);
+    pointer-events: none;
+  }
+ 
+  /* glowing border animation */
+  .photo-glow {
+    position: absolute; inset: -2px; z-index: -1; border-radius: 6px;
+    background: conic-gradient(from var(--angle, 0deg), transparent 60%, var(--purple-light) 80%, transparent 100%);
+    animation: spin-glow 4s linear infinite;
+    opacity: 0; transition: opacity .4s;
+  }
+  .photo-frame:hover .photo-glow { opacity: 1; }
+  @property --angle { syntax: '<angle>'; initial-value: 0deg; inherits: false; }
+  @keyframes spin-glow { to { --angle: 360deg; } }
+ 
+  /* floating tag card */
+  .tag-card {
+    position: absolute; z-index: 4;
+    background: rgba(26,5,51,.85);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(168,85,247,.3);
+    border-radius: 8px; padding: 12px 16px;
+    transition: transform .3s;
+  }
+  .tag-card:hover { transform: scale(1.04); }
+ 
+  .tag-stack {
+    bottom: -20px; left: -32px;
+    display: flex; flex-direction: column; gap: 6px;
+  }
+  .tag-row { display: flex; align-items: center; gap: 8px; }
+  .tag-icon { font-size: 1rem; }
+  .tag-text { font-size: .65rem; letter-spacing: .1em; color: var(--purple-pale); white-space: nowrap; }
+ 
+  .tag-exp {
+    top: 30px; right: -30px;
+    text-align: center;
+  }
+  .tag-exp-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem; font-weight: 700;
+    background: linear-gradient(135deg, #fff, var(--purple-light));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    line-height: 1;
+  }
+  .tag-exp-label { font-size: .6rem; letter-spacing: .18em; text-transform: uppercase; color: rgba(233,213,255,.5); }
+ 
+  /* ── SCROLL INDICATOR ── */
   .scroll-hint {
-    position: absolute;
-    bottom: 2.5rem;
-    left: 4rem;
-    display: flex;
-    align-items: center;
-    gap: 0.7rem;
-    color: var(--muted);
-    font-size: 11px;
-    letter-spacing: 0.1em;
-    animation: fadeIn 1.2s 0.6s ease both;
-    opacity: 0;
+    position: absolute; bottom: 40px; left: 60px; z-index: 2;
+    display: flex; align-items: center; gap: 12px;
+    animation: fadeUp .7s .8s ease both;
   }
-
   .scroll-line {
-    width: 1px;
-    height: 36px;
-    background: linear-gradient(to bottom, var(--border), transparent);
-    animation: scrollPulse 2s infinite;
+    width: 40px; height: 1px; background: rgba(168,85,247,.4);
+    position: relative; overflow: hidden;
   }
-
+  .scroll-line::after {
+    content: ''; position: absolute; top: 0; left: -100%;
+    width: 100%; height: 100%;
+    background: var(--purple-light);
+    animation: slide-line 2s ease-in-out infinite;
+  }
+  @keyframes slide-line { 0%,100%{left:-100%} 50%{left:100%} }
+  .scroll-text { font-size: .6rem; letter-spacing: .2em; text-transform: uppercase; color: rgba(255,255,255,.3); }
+ 
+  /* ── MARQUEE ── */
+  .marquee-wrap {
+    position: relative; z-index: 2;
+    border-top: 1px solid rgba(168,85,247,.15);
+    border-bottom: 1px solid rgba(168,85,247,.15);
+    padding: 18px 0; overflow: hidden;
+    background: rgba(124,58,237,.05);
+    margin-top: -1px;
+  }
+  .marquee-track {
+    display: flex; gap: 48px;
+    animation: marquee 18s linear infinite;
+    width: max-content;
+  }
+  .marquee-wrap:hover .marquee-track { animation-play-state: paused; }
+  @keyframes marquee { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+  .marquee-item {
+    display: flex; align-items: center; gap: 16px;
+    font-size: .68rem; letter-spacing: .22em; text-transform: uppercase;
+    color: rgba(233,213,255,.4); white-space: nowrap;
+  }
+  .marquee-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--purple-light); flex-shrink: 0; }
+ 
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeRight {
+    from { opacity: 0; transform: translateX(40px); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+ 
+  /* ── RESPONSIVE ── */
+  @media (max-width: 960px) {
+    nav { padding: 20px 28px; }
+    .hero { grid-template-columns: 1fr; padding: 110px 28px 60px; gap: 48px; }
+    .hero-right { display: flex; justify-content: center; }
+    .photo-frame { width: 300px; height: 380px; }
+    .tag-exp { right: -16px; }
+    .tag-stack { left: -16px; }
+    .scroll-hint { left: 28px; }
+  }
+  <!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track" id="marquee">
+    <!-- items duplicated in JS -->
+  </div>
+</div>
+ 
+<script>
+  /* ── CURSOR ── */
+  const dot  = document.getElementById('cursorDot');
+  const ring = document.getElementById('cursorRingEl');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+  document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+  (function loop() {
+    rx += (mx - rx) * .18; ry += (my - ry) * .18;
+    dot.style.left  = mx + 'px'; dot.style.top  = my + 'px';
+    ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+    requestAnimationFrame(loop);
+  })();
+ 
+  /* ── TYPEWRITER ── */
+  const phrases = ['Web Experiences.', 'Mobile Apps.', 'Brand Systems.', 'Design Systems.', 'SaaS Products.'];
+  let pi = 0, ci = 0, deleting = false;
+  const tw = document.getElementById('tw');
+  function typeLoop() {
+    const cur = phrases[pi];
+    if (!deleting) {
+      tw.textContent = cur.slice(0, ++ci);
+      if (ci === cur.length) { deleting = true; setTimeout(typeLoop, 1800); return; }
+    } else {
+      tw.textContent = cur.slice(0, --ci);
+      if (ci === 0) { deleting = false; pi = (pi + 1) % phrases.length; }
+    }
+    setTimeout(typeLoop, deleting ? 45 : 80);
+  }
+  typeLoop();
+ 
+  /* ── COUNT UP ── */
+  document.querySelectorAll('[data-target]').forEach(el => {
+    const target = +el.dataset.target;
+    let count = 0;
+    const step = Math.ceil(target / 60);
+    const tick = setInterval(() => {
+      count = Math.min(count + step, target);
+      el.textContent = count + '+';
+      if (count >= target) clearInterval(tick);
+    }, 24);
+  });
+ 
+  /* ── MARQUEE ── */
+  const items = ['Product Design', 'Frontend Dev', 'Motion Design', 'Brand Strategy', 'UX Research', 'React & Next.js', 'Figma & Framer', 'TypeScript'];
+  const track = document.getElementById('marquee');
+  const doubled = [...items, ...items];
+  doubled.forEach(t => {
+    const d = document.createElement('div');
+    d.className = 'marquee-item';
+    d.innerHTML = `<span class="marquee-dot"></span>${t}`;
+    track.appendChild(d);
+  });
+ 
+  /* ── TILT on photo ── */
+  const frame = document.querySelector('.photo-inner');
+  frame.addEventListener('mousemove', e => {
+    const r = frame.getBoundingClientRect();
+    const x = ((e.clientX - r.left) / r.width  - .5) * 10;
+    const y = ((e.clientY - r.top)  / r.height - .5) * -10;
+    frame.style.transform = `perspective(600px) rotateX(${y}deg) rotateY(${x}deg) scale(1.02)`;
+  });
+  frame.addEventListener('mouseleave', () => { frame.style.transform = ''; });
+</script>
   /* SECTION BASE */
   section { padding: 7rem 4rem; }
 
@@ -470,25 +753,108 @@
 </nav>
 
 <!-- HERO -->
-<section class="hero" id="home">
-  <div class="hero-bg-circle"></div>
-  <div class="hero-content">
-    <p class="hero-eyebrow">Portfolio</p>
-    <h1 class="hero-name">Hi, I'm<br/><em>Dhinesh</em></h1>
-    <p class="hero-tagline">
-      Mechatronics Engineering Student — passionate about storytelling through content and video creation.
+<section class="hero">
+  <!-- LEFT -->
+  <div class="hero-left">
+    <div class="badge">
+      <span class="badge-dot"></span>
+      <span>Available for freelance</span>
+    </div>
+ 
+    <h1 class="hero-title">
+      Crafting digital<br>
+      <span class="line-accent">experiences</span><br>
+      that inspire.
+    </h1>
+ 
+    <p class="hero-sub">
+      I'm a product designer &amp; developer who lives at the intersection of
+      beautiful interfaces and thoughtful engineering. Based in the future,
+      working for the world.
     </p>
-    <a href="#contact" class="hero-cta">
-      Get in Touch
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <line x1="5" y1="12" x2="19" y2="12"/>
-        <polyline points="12 5 19 12 12 19"/>
-      </svg>
-    </a>
+ 
+    <div class="typewriter-wrap">
+      <span class="tw-label">I build —</span>
+      <span class="tw-text" id="tw"></span>
+    </div>
+ 
+    <div class="stats">
+      <div class="stat">
+        <span class="stat-num" data-target="48">0</span>
+        <span class="stat-label">Projects done</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num" data-target="5">0</span>
+        <span class="stat-label">Years exp.</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num" data-target="30">0</span>
+        <span class="stat-label">Happy clients</span>
+      </div>
+    </div>
+ 
+    <div class="hero-actions">
+      <button class="btn-primary">View My Work</button>
+      <button class="btn-secondary">
+        Download CV
+        <span class="btn-arrow">→</span>
+      </button>
+    </div>
+ 
+    <div class="socials">
+      <a href="#" class="social-link" title="GitHub">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.82-.26.82-.58v-2.03c-3.34.73-4.04-1.61-4.04-1.61-.54-1.38-1.33-1.75-1.33-1.75-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.23 1.84 1.23 1.07 1.83 2.8 1.3 3.48 1 .11-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.13-.3-.54-1.52.12-3.18 0 0 1-.32 3.3 1.23a11.5 11.5 0 0 1 3-.4c1.02 0 2.04.14 3 .4 2.28-1.55 3.29-1.23 3.29-1.23.66 1.66.25 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.21.7.82.58C20.56 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"/></svg>
+      </a>
+      <a href="#" class="social-link" title="LinkedIn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.95v5.66H9.36V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45C23.2 24 24 23.23 24 22.27V1.73C24 .77 23.2 0 22.22 0z"/></svg>
+      </a>
+      <a href="#" class="social-link" title="Dribbble">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12s5.37 12 12 12 12-5.37 12-12S18.63 0 12 0zm7.93 5.52a10.15 10.15 0 0 1 2.28 5.85c-.34-.07-3.72-.75-7.13-.32-.08-.18-.15-.36-.23-.54a27.7 27.7 0 0 0-.68-1.46c3.77-1.54 5.49-3.76 5.76-3.53zM12 1.93c2.62 0 5.02.97 6.84 2.56-.24.25-1.79 2.32-5.44 3.68C11.7 6.11 9.9 3.67 9.62 3.27A10.2 10.2 0 0 1 12 1.93zM7.51 4.03c.27.37 2.1 2.82 3.82 4.92-4.83 1.28-9.1 1.25-9.55 1.25A10.23 10.23 0 0 1 7.51 4.03zM1.93 12l.01-.35c.44.01 5.4.07 10.55-1.47.3.57.58 1.16.84 1.75l-.3.08c-5.34 1.73-8.17 6.46-8.41 6.88A10.15 10.15 0 0 1 1.93 12zm10.07 10.07c-2.43 0-4.67-.86-6.41-2.28.2-.39 2.51-4.86 8.35-6.94l.07-.02c1.5 3.88 2.11 7.13 2.27 8.04a10.14 10.14 0 0 1-4.28 1.2zm6.13-2.13c-.12-.71-.68-3.79-2.08-7.61 3.22-.51 6.04.33 6.38.43a10.22 10.22 0 0 1-4.3 7.18z"/></svg>
+      </a>
+      <a href="#" class="social-link" title="Twitter / X">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.24 2h3.14l-6.86 7.84L22.5 22h-6.32l-4.95-6.47L5.6 22H2.45l7.34-8.39L2 2h6.48l4.47 5.85L18.24 2zm-1.1 18h1.74L7.01 3.74H5.15L17.14 20z"/></svg>
+      </a>
+    </div>
   </div>
+ 
+  <!-- RIGHT — PHOTO -->
+  <div class="hero-right">
+    <div class="photo-frame">
+      <div class="photo-glow"></div>
+      <div class="photo-inner">
+        <!--
+          Replace the placeholder below with your actual photo:
+          <img src="your-photo.jpg" alt="Your Name" class="photo-img">
+        -->
+        <div class="photo-placeholder">
+          <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+            <circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.58-7 8-7s8 3 8 7"/>
+          </svg>
+          <p>Your photo here</p>
+          <p style="font-size:.58rem;opacity:.5">Replace with &lt;img&gt; tag</p>
+        </div>
+        <div class="photo-overlay"></div>
+      </div>
+ 
+      <!-- floating experience badge -->
+      <div class="tag-card tag-exp">
+        <div class="tag-exp-num">5+</div>
+        <div class="tag-exp-label">Years of<br>experience</div>
+      </div>
+ 
+      <!-- floating tech stack badge -->
+      <div class="tag-card tag-stack">
+        <div class="tag-row"><span class="tag-icon">⚛️</span><span class="tag-text">React & Next.js</span></div>
+        <div class="tag-row"><span class="tag-icon">🎨</span><span class="tag-text">UI / UX Design</span></div>
+        <div class="tag-row"><span class="tag-icon">⚡</span><span class="tag-text">Full Stack Dev</span></div>
+      </div>
+    </div>
+  </div>
+ 
+  <!-- scroll hint -->
   <div class="scroll-hint">
     <div class="scroll-line"></div>
-    Scroll
+    <span class="scroll-text">Scroll to explore</span>
   </div>
 </section>
 
